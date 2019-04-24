@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
 
+	"github.com/bobheadxi/res"
 	"github.com/bobheadxi/zapx/internal"
 	"github.com/bobheadxi/zapx/test"
 )
@@ -53,7 +53,7 @@ func Test_loggerMiddleware(t *testing.T) {
 			m.Use(tt.args.middlewares...)
 			m.Use(handler)
 			m.Get("/", func(w http.ResponseWriter, r *http.Request) {
-				render.JSON(w, r, map[string]string{"hi": "bye"})
+				res.R(w, r, res.MsgOK("hello world!"))
 			})
 
 			// create a mock request to use
