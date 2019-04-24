@@ -53,7 +53,8 @@ func NewErrorReportingLogger(
 			ServiceName:    service.Name,
 			ServiceVersion: service.Version,
 			OnError:        errHandler,
-		})
+		},
+		opts...)
 	if err != nil {
 		return nil, err
 	}
