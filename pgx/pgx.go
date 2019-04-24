@@ -12,7 +12,7 @@ type databaseLogger struct {
 
 // Options denotes configuration for the pgx database logger
 type Options struct {
-	LogInfoAsInfo bool
+	LogInfoAsDebug bool
 }
 
 // NewLogger wraps the given logger in pgx.Logger
@@ -33,10 +33,10 @@ func (d *databaseLogger) Log(lv pgx.LogLevel, msg string, context map[string]int
 	case pgx.LogLevelDebug, pgx.LogLevelTrace:
 		d.l.Debug(msg, levelField, ctxField)
 	case pgx.LogLevelInfo:
-		if d.opts.LogInfoAsInfo {
-			d.l.Info(msg, levelField, ctxField)
-		} else {
+		if d.opts.LogInfoAsDebug {
 			d.l.Debug(msg, levelField, ctxField)
+		} else {
+			d.l.Info(msg, levelField, ctxField)
 		}
 	case pgx.LogLevelWarn:
 		d.l.Warn(msg, levelField, ctxField)
