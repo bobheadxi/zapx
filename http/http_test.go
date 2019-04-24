@@ -1,6 +1,7 @@
 package http
 
 import (
+	"context"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -10,6 +11,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 
+	"github.com/bobheadxi/zapx/internal"
 	"github.com/bobheadxi/zapx/test"
 )
 
@@ -26,12 +28,12 @@ func Test_loggerMiddleware(t *testing.T) {
 		want []string
 	}{
 		{
-			"GET with request ID",
+			"GET with request ID middleware",
 			args{"GET", "/", nil, []func(http.Handler) http.Handler{middleware.RequestID}},
 			[]string{"req.path", "req.id"},
 		},
 		{
-			"GET with req.ip",
+			"GET with real IP middleware",
 			args{"GET", "/", nil, []func(http.Handler) http.Handler{middleware.RealIP}},
 			[]string{"req.path", "req.ip"},
 		},
@@ -40,8 +42,10 @@ func Test_loggerMiddleware(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// create bootstrapped logger and middleware
 			var l, out = test.NewObservable()
-			var handler = NewMiddleware(l, LogKeys{
-				RequestID: "req.id",
+			var handler = NewMiddleware(l, LogFields{
+				"req.id": func(ctx context.Context) string {
+					return internal.String(ctx, middleware.RequestIDKey)
+				},
 			})
 
 			// set up mock router
