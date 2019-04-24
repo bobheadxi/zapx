@@ -1,4 +1,4 @@
-package gqlgen
+package gql
 
 import (
 	"context"
