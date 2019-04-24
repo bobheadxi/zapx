@@ -9,13 +9,11 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// New creates a default zap logger based with basic defaults
-// logpath:
-// - if set, will use json encoder and write to the provided filepath
-// dev:
-// - if true, will use zap.DevelopmentConfig with colors enabled, though if logpath
-//   is set, the json encoder (without colors) will be enforced
-// - if false, will use zap.ProductionConfig
+// New creates a default zap logger based with basic defaults.
+// If `logpath` is set, will use json encoder and write to the provided filepath.
+// If `dev` is true, will use zap.DevelopmentConfig with colors enabled, though
+// if logpath is set, the json encoder (without colors) will be enforced.
+// If `dev` is false, will use zap.ProductionConfig.
 func New(logpath string, dev bool) (l *zap.Logger, err error) {
 	var config zap.Config
 	if dev {
