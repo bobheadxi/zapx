@@ -1,4 +1,4 @@
-package http
+package zhttp
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/bobheadxi/res"
 	"github.com/bobheadxi/zapx/internal"
-	"github.com/bobheadxi/zapx/test"
+	"github.com/bobheadxi/zapx/ztest"
 )
 
 func Test_loggerMiddleware(t *testing.T) {
@@ -41,7 +41,7 @@ func Test_loggerMiddleware(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// create bootstrapped logger and middleware
-			var l, out = test.NewObservable()
+			var l, out = ztest.NewObservable()
 			var handler = NewMiddleware(l, LogFields{
 				"req.id": func(ctx context.Context) string {
 					return internal.String(ctx, middleware.RequestIDKey)

@@ -1,4 +1,4 @@
-package pgx
+package zpgx
 
 import (
 	"github.com/jackc/pgx"
