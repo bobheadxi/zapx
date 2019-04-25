@@ -2,6 +2,17 @@
 
 Package bench is just a bunch of benchmarks for the various subpackages in `zapx`.
 
+Learn more about benchmarks here: https://golang.org/pkg/testing/#hdr-Benchmarks
+
+To run these benchmarks:
+
+	go test -bench . -benchmem ./...
+
+Results can be exported using https://github.com/bobheadxi/gobenchdata - for
+example, to export a run as JSON:
+
+	go test -bench . -benchmem ./... | gobenchdata --json bench.json
+
 */
 package benchmarks
 
@@ -17,11 +28,11 @@ import (
 	"github.com/bobheadxi/zapx/zgcp"
 )
 
-func BenchmarkLoggingInfo(b *testing.B) {
+func BenchmarkLoggerInfo(b *testing.B) {
 	os.RemoveAll("./tmp")
 	defer os.RemoveAll("./tmp")
 
-	b.Run("zapx::plain-logger", func(b *testing.B) {
+	b.Run("zapx::plain", func(b *testing.B) {
 		logger, err := zapx.New("./tmp/"+b.Name(), false, zapx.OnlyToFile())
 		require.NoError(b, err)
 
@@ -31,6 +42,7 @@ func BenchmarkLoggingInfo(b *testing.B) {
 				logger.Info(fakeMessage(), fakeFields()...)
 			}
 		})
+		logger.Sync()
 	})
 	b.Run("zapx/zgcp::error-reporting", func(b *testing.B) {
 		srv := newTestServer()
@@ -49,17 +61,18 @@ func BenchmarkLoggingInfo(b *testing.B) {
 				logger.Info(fakeMessage(), fakeFields()...)
 			}
 		})
+		logger.Sync()
 	})
 	/* TODO
 	b.Run("zapx/zpgx::logger", func(b *testing.B) {})
 	*/
 }
 
-func BenchmarkLoggingError(b *testing.B) {
+func BenchmarkLoggerError(b *testing.B) {
 	os.RemoveAll("./tmp")
 	defer os.RemoveAll("./tmp")
 
-	b.Run("zapx::plain-logger", func(b *testing.B) {
+	b.Run("zapx::plain", func(b *testing.B) {
 		logger, err := zapx.New("./tmp/"+b.Name(), false, zapx.OnlyToFile())
 		require.NoError(b, err)
 
@@ -69,6 +82,7 @@ func BenchmarkLoggingError(b *testing.B) {
 				logger.Error(fakeMessage(), fakeFields()...)
 			}
 		})
+		logger.Sync()
 	})
 	b.Run("zapx/zgcp::error-reporting", func(b *testing.B) {
 		srv := newTestServer()
@@ -87,6 +101,7 @@ func BenchmarkLoggingError(b *testing.B) {
 				logger.Error(fakeMessage(), fakeFields()...)
 			}
 		})
+		logger.Sync()
 	})
 	/* TODO
 	b.Run("zapx/zpgx::logger", func(b *testing.B) {})
