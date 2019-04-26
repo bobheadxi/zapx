@@ -11,24 +11,23 @@ type FieldSetMarshaller interface {
 	Fields() []zap.Field
 }
 
-type fieldSet struct {
-	fields []zap.Field
-}
+type fieldSet []zap.Field
 
 func (f fieldSet) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-	for _, field := range f.fields {
-		field.AddTo(enc)
+	for i := range f {
+		f[i].AddTo(enc)
 	}
 	return nil
 }
 
-func (f fieldSet) Fields() []zap.Field { return f.fields }
+func (f fieldSet) Fields() []zap.Field { return f }
 
-// Fields allows logging of sets of fields as a log object
-func Fields(key string, fields ...zap.Field) zap.Field {
+// FieldSet allows logging of sets of fields as a log object
+// TODO: not as performant as testdata.Obj for some reason, need to look into why
+func FieldSet(key string, fields ...zap.Field) zap.Field {
 	return zap.Field{
 		Key:       key,
 		Type:      zapcore.ObjectMarshalerType,
-		Interface: fieldSet{fields: fields},
+		Interface: fieldSet(fields),
 	}
 }

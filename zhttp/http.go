@@ -76,7 +76,7 @@ func (m *Middleware) Recoverer(next http.Handler) http.Handler {
 }
 
 func requestFields(r *http.Request) zap.Field {
-	return zapx.Fields("req",
+	return zapx.FieldSet("req",
 		zap.String("path", r.URL.Path),
 		zap.String("query", r.URL.RawQuery),
 		zap.String("method", r.Method),
@@ -85,6 +85,6 @@ func requestFields(r *http.Request) zap.Field {
 }
 
 func responseFields(ww middleware.WrapResponseWriter) zap.Field {
-	return zapx.Fields("resp",
+	return zapx.FieldSet("resp",
 		zap.Int("status", ww.Status()))
 }

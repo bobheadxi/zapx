@@ -25,6 +25,7 @@ import (
 	"google.golang.org/api/option"
 
 	"github.com/bobheadxi/zapx"
+	"github.com/bobheadxi/zapx/benchmarks/testdata"
 	"github.com/bobheadxi/zapx/zgcp"
 )
 
@@ -39,7 +40,7 @@ func BenchmarkLoggerInfo(b *testing.B) {
 		b.ResetTimer()
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				logger.Info(fakeMessage(), fakeFields()...)
+				logger.Info(testdata.FakeMessage(), testdata.FakeFields()...)
 			}
 		})
 		logger.Sync()
@@ -58,7 +59,7 @@ func BenchmarkLoggerInfo(b *testing.B) {
 		b.ResetTimer()
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				logger.Info(fakeMessage(), fakeFields()...)
+				logger.Info(testdata.FakeMessage(), testdata.FakeFields()...)
 			}
 		})
 		logger.Sync()
@@ -79,7 +80,7 @@ func BenchmarkLoggerError(b *testing.B) {
 		b.ResetTimer()
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				logger.Error(fakeMessage(), fakeFields()...)
+				logger.Error(testdata.FakeMessage(), testdata.FakeFields()...)
 			}
 		})
 		logger.Sync()
@@ -98,7 +99,7 @@ func BenchmarkLoggerError(b *testing.B) {
 		b.ResetTimer()
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				logger.Error(fakeMessage(), fakeFields()...)
+				logger.Error(testdata.FakeMessage(), testdata.FakeFields()...)
 			}
 		})
 		logger.Sync()
