@@ -70,7 +70,11 @@ func BenchmarkFieldSet(b *testing.B) {
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
 				logger.Info(testdata.FakeMessage(),
-					zap.Object("data", testdata.FakeObject()))
+					zap.Object("data", &testdata.Obj{
+						ID:        42,
+						Name:      "bobheadxi",
+						CreatedAt: time.Date(1998, 3, 11, 12, 0, 0, 0, time.UTC),
+					}))
 			}
 		})
 		logger.Sync()
