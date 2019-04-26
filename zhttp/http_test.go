@@ -7,15 +7,43 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-
 	"github.com/bobheadxi/res"
+	"github.com/bobheadxi/zapx"
 	"github.com/bobheadxi/zapx/internal"
 	"github.com/bobheadxi/zapx/ztest"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zaptest/observer"
 )
 
-func Test_loggerMiddleware(t *testing.T) {
+func find(t *testing.T, out *observer.ObservedLogs, want map[string]bool) {
+	for _, e := range out.All() {
+		for _, f := range e.Context {
+			if _, w := want[f.Key]; w {
+				t.Log(f.Key, ":", f.String)
+				assert.NotEmpty(t, f.String, "expected "+f.Key)
+				want[f.Key] = true
+			}
+			if field, ok := f.Interface.(zapx.FieldSetMarshaller); ok {
+				for _, sub := range field.Fields() {
+					key := f.Key + "." + sub.Key
+					if _, w := want[key]; w {
+						t.Log(key, ":", sub.String)
+						assert.NotEmpty(t, sub.String, "expected "+sub.Key)
+						want[key] = true
+					}
+				}
+			}
+		}
+	}
+	for k, found := range want {
+		assert.True(t, found, "should have found "+k)
+	}
+}
+
+func TestMiddleware_Logger(t *testing.T) {
 	type args struct {
 		method      string
 		path        string
@@ -25,33 +53,33 @@ func Test_loggerMiddleware(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want []string
+		want map[string]bool
 	}{
 		{
 			"GET with request ID middleware",
 			args{"GET", "/", nil, []func(http.Handler) http.Handler{middleware.RequestID}},
-			[]string{"req.path", "req.id"},
+			map[string]bool{"req.id": false},
 		},
 		{
 			"GET with real IP middleware",
 			args{"GET", "/", nil, []func(http.Handler) http.Handler{middleware.RealIP}},
-			[]string{"req.path", "req.ip"},
+			map[string]bool{"req.ip": false},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// create bootstrapped logger and middleware
 			var l, out = ztest.NewObservable()
-			var handler = NewMiddleware(l, LogFields{
-				"req.id": func(ctx context.Context) string {
-					return internal.String(ctx, middleware.RequestIDKey)
+			var md = NewMiddleware(l, LogFields{
+				func(ctx context.Context) zap.Field {
+					return zap.String("req.id", internal.String(ctx, middleware.RequestIDKey))
 				},
 			})
 
 			// set up mock router
 			m := chi.NewRouter()
 			m.Use(tt.args.middlewares...)
-			m.Use(handler)
+			m.Use(md.Logger)
 			m.Get("/", func(w http.ResponseWriter, r *http.Request) {
 				res.R(w, r, res.MsgOK("hello world!"))
 			})
@@ -64,14 +92,56 @@ func Test_loggerMiddleware(t *testing.T) {
 			m.ServeHTTP(httptest.NewRecorder(), req)
 
 			// check for desired log fields
-			for _, e := range out.All() {
-				for _, f := range tt.want {
-					// find field, cast as string, and check if empty
-					if val, _ := e.ContextMap()[f].(string); val == "" {
-						t.Errorf("field %s unexpectedly empty", f)
-					}
-				}
-			}
+			find(t, out, tt.want)
+		})
+	}
+}
+
+func TestMiddleware_Recoverer(t *testing.T) {
+	type args struct {
+		method      string
+		path        string
+		body        io.Reader
+		middlewares []func(http.Handler) http.Handler
+	}
+	tests := []struct {
+		name string
+		args args
+		want map[string]bool
+	}{
+		{
+			"GET with request ID middleware and panic",
+			args{"GET", "/", nil, []func(http.Handler) http.Handler{middleware.RequestID}},
+			map[string]bool{"req.id": false, "panic": false, "req.ip": false},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// create bootstrapped logger and middleware
+			var l, out = ztest.NewObservable()
+			var md = NewMiddleware(l, LogFields{
+				func(ctx context.Context) zap.Field {
+					return zap.String("req.id", internal.String(ctx, middleware.RequestIDKey))
+				},
+			})
+
+			// set up mock router
+			m := chi.NewRouter()
+			m.Use(tt.args.middlewares...)
+			m.Use(md.Recoverer)
+			m.Get("/", func(w http.ResponseWriter, r *http.Request) {
+				panic("oh no")
+			})
+
+			// create a mock request to use
+			req := httptest.NewRequest(tt.args.method, "http://testing"+tt.args.path,
+				tt.args.body)
+
+			// serve request
+			m.ServeHTTP(httptest.NewRecorder(), req)
+
+			// check for desired log fields
+			find(t, out, tt.want)
 		})
 	}
 }
