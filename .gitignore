@@ -2,3 +2,4 @@ vendor
 tmp
 debug.test
 .vscode
+benchmarks.json
