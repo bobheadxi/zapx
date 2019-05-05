@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <meta name="theme-color" content="#000000" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <title>zapx continuous benchmarks</title>
+  </head>
+
+  <body>
+    
+    <div id="benchmarks-path" hidden>benchmarks.json</div>
+    <div id="root-import" hidden></div>
+  
+    
+    <div class="header">
+      <h1>zapx continuous benchmarks</h1>
+      <h4>
+        generated with
+        <a href="https://github.com/marketplace/actions/gobenchdata-to-gh-pages" target="_blank">
+          gobenchdata
+        </a>
+      </h4>
+      <p></p>
+    </div>
+
+    <hr />
+
+    
+    <div class="main">
+      <div id="charts"></div>
+    </div>
+
+    
+    <div class="footer">
+      <a href="https://github.com/marketplace/actions/gobenchdata-to-gh-pages">
+        <img alt="View Action in the GitHub Marketplace" src="https://img.shields.io/badge/view-github%20action-yellow.svg" />
+      </a>
+    </div>
+
+    
+    <script type="module">
+      import { generateCharts } from './app.js';
+      const charts = document.getElementById('charts');
+      const benchmarks = document.getElementById('benchmarks-path');
+      const rootImport = document.getElementById('root-import');
+      window.onload = generateCharts({
+        div: charts,
+        json: (benchmarks.innerText === 'benchmarks.json')
+          ? 'benchmarks.json'
+          : benchmarks.innerText,
+        rootImport: (rootImport.innerText === '')
+          ? ''
+          : rootImport.innerText,
+      }).finally(console.log('charts loaded!'));
+    </script>
+  </body>
+</html>
