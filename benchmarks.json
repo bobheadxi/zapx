@@ -1,0 +1,54 @@
+[
+  {
+    "Version": "5713573753c0ce9805b233e2b8a8ee20de1b292e",
+    "Date": 1557097861,
+    "Tags": [
+      "ref=refs/heads/master"
+    ],
+    "Suites": [
+      {
+        "Goos": "linux",
+        "Goarch": "amd64",
+        "Pkg": "github.com/bobheadxi/zapx/benchmarks",
+        "Benchmarks": [
+          {
+            "Name": "BenchmarkLoggerInfo/zapx::plain",
+            "Runs": 1000000,
+            "NsPerOp": 1472,
+            "Mem": {
+              "BytesPerOp": 866,
+              "AllocsPerOp": 7
+            }
+          },
+          {
+            "Name": "BenchmarkLoggerInfo/zapx/zgcp::error-reporting",
+            "Runs": 1000000,
+            "NsPerOp": 1524,
+            "Mem": {
+              "BytesPerOp": 867,
+              "AllocsPerOp": 7
+            }
+          },
+          {
+            "Name": "BenchmarkLoggerError/zapx::plain",
+            "Runs": 1000000,
+            "NsPerOp": 1599,
+            "Mem": {
+              "BytesPerOp": 871,
+              "AllocsPerOp": 7
+            }
+          },
+          {
+            "Name": "BenchmarkLoggerError/zapx/zgcp::error-reporting",
+            "Runs": 30000,
+            "NsPerOp": 60877,
+            "Mem": {
+              "BytesPerOp": 27909,
+              "AllocsPerOp": 91
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
