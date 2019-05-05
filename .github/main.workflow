@@ -9,7 +9,7 @@ action "filter" {
 }
 
 action "gobenchdata to gh-pages" {
-  uses = "bobheadxi/gobenchdata@master"
+  uses = "bobheadxi/gobenchdata@v0.2.0"
   needs = ["filter"]
   secrets = ["GITHUB_TOKEN"]
   env = {
