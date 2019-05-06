@@ -6,7 +6,7 @@ import (
 
 	"net/http"
 
-	"github.com/bobheadxi/zapx"
+	"go.bobheadxi.dev/zapx"
 	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
 )

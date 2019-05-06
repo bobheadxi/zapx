@@ -8,7 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"go.uber.org/zap"
 
-	"github.com/bobheadxi/zapx/internal"
+	"go.bobheadxi.dev/zapx/internal"
 )
 
 // httpCtx are context keys used for injected HTTP variables, mostly for the

@@ -1,4 +1,4 @@
-module github.com/bobheadxi/zapx
+module go.bobheadxi.dev/zapx
 
 go 1.12
 

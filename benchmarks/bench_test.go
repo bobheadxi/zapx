@@ -24,9 +24,9 @@ import (
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 
-	"github.com/bobheadxi/zapx"
-	"github.com/bobheadxi/zapx/benchmarks/testdata"
-	"github.com/bobheadxi/zapx/zgcp"
+	"go.bobheadxi.dev/zapx"
+	"go.bobheadxi.dev/zapx/benchmarks/testdata"
+	"go.bobheadxi.dev/zapx/zgcp"
 )
 
 func BenchmarkLoggerInfo(b *testing.B) {

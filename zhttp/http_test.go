@@ -8,9 +8,9 @@ import (
 	"testing"
 
 	"github.com/bobheadxi/res"
-	"github.com/bobheadxi/zapx"
-	"github.com/bobheadxi/zapx/internal"
-	"github.com/bobheadxi/zapx/ztest"
+	"go.bobheadxi.dev/zapx"
+	"go.bobheadxi.dev/zapx/internal"
+	"go.bobheadxi.dev/zapx/ztest"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/stretchr/testify/assert"
