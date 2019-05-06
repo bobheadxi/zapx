@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/bobheadxi/res"
+	"go.bobheadxi.dev/res"
 )
 
 type handler struct{}

@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/bobheadxi/res"
+	"go.bobheadxi.dev/res"
 	"go.bobheadxi.dev/zapx"
 	"go.bobheadxi.dev/zapx/internal"
 	"go.bobheadxi.dev/zapx/ztest"

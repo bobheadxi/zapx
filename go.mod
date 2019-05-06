@@ -9,7 +9,7 @@ require (
 	github.com/Shopify/sarama v1.22.1 // indirect
 	github.com/agnivade/levenshtein v1.0.2 // indirect
 	github.com/beorn7/perks v1.0.0 // indirect
-	github.com/bobheadxi/res v0.1.0
+	go.bobheadxi.dev/res v0.2.0
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/go-logfmt/logfmt v0.4.0 // indirect
