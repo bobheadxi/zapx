@@ -100,7 +100,7 @@ export async function generateCharts({
             if (p && p.length) {
               const { _index: i, _xScale: x } = p[0];
               const commit = x.ticks[i].split(' ')[0];
-              window.open(`https://${rootImport}/commit/${commit}`, '_blank');
+              window.open(`https://${source}/commit/${commit}`, '_blank');
             }
           }
 

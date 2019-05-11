@@ -52,21 +52,21 @@
     <script type="module">
       import { generateCharts } from './app.js';
       const charts = document.getElementById('charts');
-      const benchmarks = document.getElementById('benchmarks-path');
-      const source = document.getElementById('source');
-      const canonicalImport = document.getElementById('canonical-import');
+      const benchmarks = document.getElementById('benchmarks-path').innerText;
+      const source = document.getElementById('source').innerText;
+      const canonicalImport = document.getElementById('canonical-import').innerText;
       window.onload = generateCharts({
         div: charts,
-        json: (benchmarks.innerText === 'benchmarks.json')
+        json: benchmarks.includes('.BenchmarksPath')
           ? 'benchmarks.json'
-          : benchmarks.innerText,
+          : benchmarks,
 
-        source: (source.innerText === 'github.com/bobheadxi/zapx')
+        source: source.includes('.Source')
           ? ''
-          : source.innerText,
-        canonicalImport: (canonicalImport.innerText === 'go.bobheadxi.dev/zapx')
+          : source,
+        canonicalImport: canonicalImport.includes('.CanonicalImport')
           ? ''
-          : canonicalImport.innerText,
+          : canonicalImport,
       }).finally(console.log('charts loaded!'));
     </script>
   </body>
