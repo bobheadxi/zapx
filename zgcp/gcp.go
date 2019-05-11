@@ -1,15 +1,16 @@
 package zgcp
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	stdlog "log"
 	"net/http"
 	"runtime"
-	"strings"
 
 	"cloud.google.com/go/errorreporting"
+	"go.bobheadxi.dev/zapx/internal"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/api/option"
@@ -74,6 +75,8 @@ type gcpErrorReportingZapCore struct {
 	reporter gcpReporter
 	enc      zapcore.Encoder
 	fields   Fields
+
+	buffers internal.Pool
 }
 
 func gcpErrorsWrapCore(reporter gcpReporter, fields Fields) zapcore.Core {
@@ -91,6 +94,7 @@ func gcpErrorsWrapCore(reporter gcpReporter, fields Fields) zapcore.Core {
 			EncodeCaller:   zapcore.ShortCallerEncoder,
 		}),
 		fields,
+		internal.NewPool(),
 	}
 }
 
@@ -118,6 +122,7 @@ func (z *gcpErrorReportingZapCore) Write(entry zapcore.Entry, fields []zapcore.F
 	}
 
 	// report to GCP
+	stackBuf := z.buffers.Get()
 	z.reporter.Report(errorreporting.Entry{
 		Error: errors.New(buf.String()),
 		User:  user,
@@ -126,8 +131,9 @@ func (z *gcpErrorReportingZapCore) Write(entry zapcore.Entry, fields []zapcore.F
 		// GCP Error Reporting does not like Zap's custom stacktraces (from entry.Stack),
 		// so a custom stacktrace must be taken that conforms to the standard. Ugh.
 		// See stacktrace() for details.
-		Stack: stacktrace(),
+		Stack: stacktrace(stackBuf.Bytes()),
 	})
+	stackBuf.Free()
 
 	return nil
 }
@@ -138,7 +144,7 @@ func (z *gcpErrorReportingZapCore) Sync() error {
 }
 
 func (z *gcpErrorReportingZapCore) With(fields []zapcore.Field) zapcore.Core {
-	clone := &gcpErrorReportingZapCore{z.reporter, z.enc.Clone(), z.fields}
+	clone := &gcpErrorReportingZapCore{z.reporter, z.enc.Clone(), z.fields, z.buffers}
 	for i := range fields {
 		fields[i].AddTo(clone.enc)
 	}
@@ -159,13 +165,13 @@ func (z *gcpErrorReportingZapCore) Check(e zapcore.Entry, c *zapcore.CheckedEntr
 // * logger.Warn() or equivalent
 const stackSkip = 4
 
+var lineSep = []byte{'\n'}
+
 // stacktrace captures the calling goroutine's stack and trims out irrelevant
 // levels (as described in documentation for stackSkip)
-// TODO: this performs quite poorly, refactor to avoid string conversions
-func stacktrace() []byte {
-	var buf [16 * 1024]byte
-	stack := buf[0:runtime.Stack(buf[:], false)]
-	lines := strings.Split(string(stack), "\n")
+func stacktrace(buf []byte) []byte {
+	runtime.Stack(buf, false)
+	lines := bytes.Split(buf, lineSep)
 	lines = append(lines[:1], lines[2*stackSkip+1:]...)
-	return []byte(strings.Join(lines, "\n"))
+	return bytes.Join(lines, lineSep)
 }

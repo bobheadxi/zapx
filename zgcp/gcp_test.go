@@ -7,6 +7,7 @@ import (
 	"cloud.google.com/go/errorreporting"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.bobheadxi.dev/zapx/internal"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -16,8 +17,15 @@ type fakeGCPReporter struct {
 	flushed   bool
 }
 
-func (f *fakeGCPReporter) Report(e errorreporting.Entry) { f.lastEntry = e }
-func (f *fakeGCPReporter) Flush()                        { f.flushed = true }
+func (f *fakeGCPReporter) Report(e errorreporting.Entry) {
+	f.lastEntry = errorreporting.Entry{
+		Error: e.Error,
+		Req:   e.Req,
+		User:  e.User,
+		Stack: []byte(string(e.Stack)),
+	}
+}
+func (f *fakeGCPReporter) Flush() { f.flushed = true }
 
 func Test_gcpErrorReportingZapCore_Enabled(t *testing.T) {
 	var f fakeGCPReporter
@@ -29,7 +37,8 @@ func Test_gcpErrorReportingZapCore_Enabled(t *testing.T) {
 }
 
 func Test_stacktrace(t *testing.T) {
-	stack := stacktrace()
+	buf := internal.NewBuffer().(*internal.Buffer)
+	stack := stacktrace(buf.Bytes())
 	assert.NotNil(t, stack)
 }
 
