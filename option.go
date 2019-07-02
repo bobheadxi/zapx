@@ -27,3 +27,13 @@ func WithFields(fields map[string]interface{}) Option {
 		return nil
 	}
 }
+
+// WithDebug sets log level to debug if given bool is true
+func WithDebug(debug bool) Option {
+	return func(cfg *zap.Config) error {
+		if debug {
+			cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
+		}
+		return nil
+	}
+}
