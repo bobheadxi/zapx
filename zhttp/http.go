@@ -2,13 +2,13 @@ package zhttp
 
 import (
 	"context"
+	"net/http"
 	"time"
 
-	"net/http"
-
-	"go.bobheadxi.dev/zapx"
 	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
+
+	"go.bobheadxi.dev/zapx/zapx"
 )
 
 // Middleware is the zapx/zhttp middleware client

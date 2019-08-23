@@ -7,15 +7,16 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"go.bobheadxi.dev/res"
-	"go.bobheadxi.dev/zapx"
-	"go.bobheadxi.dev/zapx/internal"
-	"go.bobheadxi.dev/zapx/ztest"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zaptest/observer"
+
+	"go.bobheadxi.dev/res"
+	"go.bobheadxi.dev/zapx/util/contextx"
+	"go.bobheadxi.dev/zapx/zapx"
+	"go.bobheadxi.dev/zapx/ztest"
 )
 
 func find(t *testing.T, out *observer.ObservedLogs, want map[string]bool) {
@@ -72,7 +73,7 @@ func TestMiddleware_Logger(t *testing.T) {
 			var l, out = ztest.NewObservable()
 			var md = NewMiddleware(l, LogFields{
 				func(ctx context.Context) zap.Field {
-					return zap.String("req.id", internal.String(ctx, middleware.RequestIDKey))
+					return zap.String("req.id", contextx.String(ctx, middleware.RequestIDKey))
 				},
 			})
 
@@ -121,7 +122,7 @@ func TestMiddleware_Recoverer(t *testing.T) {
 			var l, out = ztest.NewObservable()
 			var md = NewMiddleware(l, LogFields{
 				func(ctx context.Context) zap.Field {
-					return zap.String("req.id", internal.String(ctx, middleware.RequestIDKey))
+					return zap.String("req.id", contextx.String(ctx, middleware.RequestIDKey))
 				},
 			})
 

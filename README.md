@@ -11,5 +11,5 @@ logging library for [Go](https://golang.org/).
 ## Usage
 
 ```
-go get -u go.bobheadxi.dev/zapx
+go get -u go.bobheadxi.dev/zapx/zapx
 ```

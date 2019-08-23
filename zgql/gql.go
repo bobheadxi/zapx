@@ -8,7 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"go.uber.org/zap"
 
-	"go.bobheadxi.dev/zapx/internal"
+	"go.bobheadxi.dev/zapx/util/contextx"
 )
 
 // httpCtx are context keys used for injected HTTP variables, mostly for the
@@ -52,8 +52,8 @@ func NewMiddleware(l *zap.Logger, f LogFields) graphql.RequestMiddleware {
 			// request metadata
 			zap.Int("req.complexity", req.OperationComplexity),
 			zap.Any("req.variables", req.Variables),
-			zap.String("req.ip", internal.String(ctx, httpCtxKeyRemoteAddr)),
-			zap.String("req.user_agent", internal.String(ctx, httpCtxKeyUserAgent)),
+			zap.String("req.ip", contextx.String(ctx, httpCtxKeyRemoteAddr)),
+			zap.String("req.user_agent", contextx.String(ctx, httpCtxKeyUserAgent)),
 
 			// response metadata
 			zap.Bool("resp.errored", len(req.Errors) > 0),

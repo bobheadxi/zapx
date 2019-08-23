@@ -10,7 +10,7 @@ import (
 	"runtime"
 
 	"cloud.google.com/go/errorreporting"
-	"go.bobheadxi.dev/zapx/internal"
+	"go.bobheadxi.dev/zapx/util/pool"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/api/option"
@@ -76,7 +76,7 @@ type gcpErrorReportingZapCore struct {
 	enc      zapcore.Encoder
 	fields   Fields
 
-	buffers internal.Pool
+	buffers pool.ByteBufferPool
 }
 
 func gcpErrorsWrapCore(reporter gcpReporter, fields Fields) zapcore.Core {
@@ -94,7 +94,7 @@ func gcpErrorsWrapCore(reporter gcpReporter, fields Fields) zapcore.Core {
 			EncodeCaller:   zapcore.ShortCallerEncoder,
 		}),
 		fields,
-		internal.NewPool(),
+		pool.NewByteBufferPool(),
 	}
 }
 

@@ -3,3 +3,4 @@ tmp
 debug.test
 .vscode
 benchmarks.json
+coverage.txt
