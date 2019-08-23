@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// ServiceConfig defines configuration for a Google Cloud Platform service
+// ServiceConfig defines configuration for an Azure service
 type ServiceConfig struct {
 }
 
