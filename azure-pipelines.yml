@@ -29,7 +29,7 @@ steps:
 
 - script: |
     go version
-    go mod download
+    make mod
     go get -u golang.org/x/lint/golint
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies'
