@@ -10,6 +10,25 @@ logging library for [Go](https://golang.org/).
 
 ## Usage
 
+Each subpackage is a separate module to minimize their dependency trees. To use
+the package you want, just import them using their respective package names -
+for example:
+
+```sh
+go get go.bobheadxi.dev/zapx/zapx
+go get go.bobheadxi.dev/zapx/ztest
 ```
-go get -u go.bobheadxi.dev/zapx/zapx
+
+Refer to the [godoc](https://godoc.org/go.bobheadxi.dev/zapx) for a complete
+listing of available packages and their functionality.
+
+## Development
+
+A few Makefile targets are available to help with development:
+
+```sh 
+make mod  # updates module definitions for all submodule
+make test # runs tests for each submodule
 ```
+
+Refer to the [Makefile](./Makefile) for more details.

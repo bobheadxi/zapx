@@ -1,6 +1,11 @@
+# dependencies
 vendor
+/go.mod
+/go.sum
+
+# temporary
 tmp
+benchmarks.json
 debug.test
 .vscode
-benchmarks.json
 coverage.txt

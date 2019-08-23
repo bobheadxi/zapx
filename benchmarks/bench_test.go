@@ -24,7 +24,7 @@ import (
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 
-	"go.bobheadxi.dev/zapx/benchmarks/testdata"
+	"go.bobheadxi.dev/zapx/util/testdata"
 	"go.bobheadxi.dev/zapx/zapx"
 	"go.bobheadxi.dev/zapx/zgcp"
 )

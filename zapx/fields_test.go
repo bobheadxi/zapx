@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"go.bobheadxi.dev/zapx/benchmarks/testdata"
+	"go.bobheadxi.dev/zapx/util/testdata"
 )
 
 func TestFieldSet(t *testing.T) {

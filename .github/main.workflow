@@ -14,5 +14,6 @@ action "gobenchdata to gh-pages" {
   secrets = ["GITHUB_TOKEN"]
   env = {
     PRUNE = "20"
+    GO_BENCHMARK_PKGS = "./benchmarks/..."
   }
 }

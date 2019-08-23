@@ -42,12 +42,11 @@ steps:
   workingDirectory: '$(modulePath)'
   displayName: 'Run static analysis'
 
-- script: |
-    go test -race -coverprofile=coverage.txt ./...
+- script: make test TEST_FLAGS="-v -race -coverprofile=coverage.txt"
   workingDirectory: '$(modulePath)'
   displayName: 'Run tests and report coverage'
 
-- script: bash <(curl -s https://codecov.io/bash) -t $(CODECOV_TOKEN)
+- script: make codecov CODECOV_TOKEN=$(CODECOV_TOKEN)
   workingDirectory: '$(modulePath)'
   displayName: 'Report coverage'
   condition: succeeded()
