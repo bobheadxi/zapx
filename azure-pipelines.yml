@@ -25,20 +25,16 @@ steps:
     shopt -s dotglob
     mv !(gopath) '$(modulePath)'
     echo '##vso[task.prependpath]$(GOBIN)'
+    go version
   displayName: 'Set up the Go workspace'
 
 - script: |
-    go version
     make mod
     go get -u golang.org/x/lint/golint
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies'
 
-- script: |
-    go vet ./...
-    go fmt ./...
-    golint $(go list ./... | grep -v /vendor/)
-    go build -v
+- script: make lint
   workingDirectory: '$(modulePath)'
   displayName: 'Run static analysis'
 
