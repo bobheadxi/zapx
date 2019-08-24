@@ -1,4 +1,5 @@
 [
+  {"Version":"03f4dec265cdb5db03d02ab24c4c5f929e295ebb","Date":1566675618,"Tags":["ref=refs/heads/master"],"Suites":[]},
   {"Version":"75ba37eb6aeed934d99c5825b8a419e20ca0fea3","Date":1566675361,"Tags":["ref=refs/heads/master"],"Suites":[]},
   {"Version":"47da022e590d2aa8caebf9a73cb1862ca2a3511b","Date":1566605561,"Tags":["ref=refs/heads/master"],"Suites":[]},
   {"Version":"e0480e90a40dd39df04f7202818b3f3722544c6e","Date":1564343857,"Tags":["ref=refs/heads/master"],"Suites":[{"Goos":"linux","Goarch":"amd64","Pkg":"go.bobheadxi.dev/zapx/benchmarks","Benchmarks":[{"Name":"BenchmarkLoggerInfo/zapx::plain","Runs":1000000,"NsPerOp":1479,"Mem":{"BytesPerOp":866,"AllocsPerOp":7}},{"Name":"BenchmarkLoggerInfo/zapx/zgcp::error-reporting","Runs":1000000,"NsPerOp":1524,"Mem":{"BytesPerOp":867,"AllocsPerOp":7}},{"Name":"BenchmarkLoggerError/zapx::plain","Runs":1000000,"NsPerOp":1621,"Mem":{"BytesPerOp":871,"AllocsPerOp":7}},{"Name":"BenchmarkLoggerError/zapx/zgcp::error-reporting","Runs":30000,"NsPerOp":48556,"Mem":{"BytesPerOp":10263,"AllocsPerOp":89}}]}]},
