@@ -36,7 +36,8 @@ CODECOV_TARGETS = $(addprefix codecov_, $(PACKAGES))
 codecov: $(CODECOV_TARGETS)
 $(CODECOV_TARGETS): codecov_%: %
 	@echo "[INFO] uploading coverage report for package '$<'..."
-	@(cd $< && bash <(curl -s https://codecov.io/bash) -t $(CODECOV_TOKEN))
+	@cd $< && \
+		bash -c "bash <(curl -s https://codecov.io/bash) -t $(CODECOV_TOKEN)"
 
 # clean removes various bits and pieces
 clean:
