@@ -1,5 +1,5 @@
 GO111MODULE = on
-PACKAGES = benchmarks util zapx zazure zgcp zgql zhttp zmetrics zpgx ztest
+PACKAGES = benchmarks internal zapx zazure zgcp zgql zhttp zmetrics zpgx ztest
 
 # mod manages dependencies for submodules
 MOD_VENDOR = off

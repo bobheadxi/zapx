@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"go.bobheadxi.dev/zapx/util/pool"
+	"go.bobheadxi.dev/zapx/internal/pool"
 )
 
 type fakeGCPReporter struct {
