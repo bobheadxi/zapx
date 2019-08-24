@@ -17,5 +17,6 @@ jobs:
         SUBDIRECTORY: ./benchmarks
         PRUNE_COUNT: 40
         GO_TEST_FLAGS: -cpu 1,2
+        BENCHMARKS_OUT: benchmarks/benchmarks.json
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
