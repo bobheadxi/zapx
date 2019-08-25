@@ -7,7 +7,7 @@ MOD_TARGETS = $(addprefix mod_, $(PACKAGES))
 mod: $(MOD_TARGETS)
 $(MOD_TARGETS): mod_%: %
 	@echo "[INFO] updating package '$<'..."
-	@(cd $< && go mod tidy)
+	@(cd $< && go mod tidy && go mod download)
 	@if [ "$(MOD_VENDOR)" = "on" ]; then \
 		(cd $< && go mod vendor) \
 	fi
