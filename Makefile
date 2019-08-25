@@ -1,6 +1,13 @@
 GO111MODULE = on
 PACKAGES = benchmarks util zapx zazure zgcp zgql zhttp zmetrics zpgx ztest
 
+RELEASE_TARGETS = $(addprefix release_, $(PACKAGES))
+release: $(RELEASE_TARGETS)
+	git tag $(TAG) -m "$(TAG)"
+$(RELEASE_TARGETS): release_%: %
+	@echo "[INFO] generating $(TAG) release for package '$<'..."
+	git tag $</$(TAG) -m "$(TAG) for go.bobheadxi.dev/zapx/$<"
+
 # mod manages dependencies for submodules
 MOD_VENDOR = off
 MOD_TARGETS = $(addprefix mod_, $(PACKAGES))
