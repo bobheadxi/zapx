@@ -25,7 +25,7 @@ import (
 	"google.golang.org/api/option"
 
 	"go.bobheadxi.dev/zapx/util/testdata"
-	"go.bobheadxi.dev/zapx"
+	"go.bobheadxi.dev/zapx/zapx"
 	"go.bobheadxi.dev/zapx/zgcp"
 )
 
