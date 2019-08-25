@@ -12,7 +12,7 @@ require (
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/stretchr/testify v1.4.0
 	go.bobheadxi.dev/res v0.2.0
-	go.bobheadxi.dev/zapx v0.6.2
+	go.bobheadxi.dev/zapx v0.6.3-0.20190825224725-17fd4cb4deda
 	go.bobheadxi.dev/zapx/util v0.6.2
 	go.bobheadxi.dev/zapx/ztest v0.6.2
 	go.uber.org/zap v1.10.0
