@@ -14,7 +14,7 @@ import (
 	"go.uber.org/zap/zaptest/observer"
 
 	"go.bobheadxi.dev/res"
-	"go.bobheadxi.dev/zapx/internal/contextx"
+	"go.bobheadxi.dev/zapx/util/contextx"
 	"go.bobheadxi.dev/zapx/zapx"
 	"go.bobheadxi.dev/zapx/ztest"
 )

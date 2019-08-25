@@ -10,7 +10,7 @@ import (
 	"runtime"
 
 	"cloud.google.com/go/errorreporting"
-	"go.bobheadxi.dev/zapx/internal/pool"
+	"go.bobheadxi.dev/zapx/util/pool"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/api/option"
