@@ -12,7 +12,7 @@ jobs:
       with:
         fetch-depth: 1
     - name: gobenchdata to gh-pages
-      uses: bobheadxi/gobenchdata@master
+      uses: bobheadxi/gobenchdata@v0.4.1
       with:
         SUBDIRECTORY: ./benchmarks
         PRUNE_COUNT: 40
