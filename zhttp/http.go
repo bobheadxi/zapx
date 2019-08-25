@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
 
-	"go.bobheadxi.dev/zapx/zapx"
+	"go.bobheadxi.dev/zapx"
 )
 
 // Middleware is the zapx/zhttp middleware client

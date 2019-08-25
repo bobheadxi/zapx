@@ -15,7 +15,7 @@ import (
 
 	"go.bobheadxi.dev/res"
 	"go.bobheadxi.dev/zapx/util/contextx"
-	"go.bobheadxi.dev/zapx/zapx"
+	"go.bobheadxi.dev/zapx"
 	"go.bobheadxi.dev/zapx/ztest"
 )
 
