@@ -1,6 +1,7 @@
 GO111MODULE = on
 PACKAGES = benchmarks util zapx zazure zgcp zgql zhttp zmetrics zpgx ztest
 
+# release generates tags for each submodule. see https://github.com/golang/go/wiki/Modules#publishing-a-release
 RELEASE_TARGETS = $(addprefix release_, $(PACKAGES))
 release: $(RELEASE_TARGETS)
 	git tag $(TAG) -m "$(TAG)"
