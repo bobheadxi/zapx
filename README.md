@@ -15,8 +15,9 @@ the package you want, just import them using their respective package names -
 for example:
 
 ```sh
-go get go.bobheadxi.dev/zapx
+go get go.bobheadxi.dev/zapx/zapx
 go get go.bobheadxi.dev/zapx/ztest
+go get go.bobheadxi.dev/zapx/zhttp
 ```
 
 Refer to the [godoc](https://godoc.org/go.bobheadxi.dev/zapx) for a complete
