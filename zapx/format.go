@@ -20,8 +20,8 @@ type ZapFormatLogger struct {
 }
 
 // NewFormatLogger instantiates a new default ZapFormatLogger
-func NewFormatLogger(l *zap.Logger) ZapFormatLogger {
-	return ZapFormatLogger{L: l}
+func NewFormatLogger(l *zap.Logger) *ZapFormatLogger {
+	return &ZapFormatLogger{L: l}
 }
 
 // Errorf logs at the error level
