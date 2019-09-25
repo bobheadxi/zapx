@@ -7,18 +7,17 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// ValueFunc returns the value associated with a field
+// ValueFunc returns the value associated with a field. Some default convenience
+// implementations are provided (IncrementValue, NumericValue, etc.)
 type ValueFunc func(zapcore.Field) float64
 
 // IncrementValue returns 1 when a field is encountered
 func IncrementValue(zapcore.Field) float64 { return 1 }
 
-// NumericalValue returns the numerical value of the field. It supports most basic
+// NumericValue returns the numeric value of the field. It supports most basic
 // numeric types such as Duration, Floats, and signed/unsigned integers.
-func NumericalValue(f zapcore.Field) float64 {
+func NumericValue(f zapcore.Field) float64 {
 	switch f.Type {
-	case zapcore.DurationType:
-		return float64(time.Duration(f.Integer))
 	case zapcore.Float64Type:
 		return float64(math.Float64frombits(uint64(f.Integer)))
 	case zapcore.Float32Type:
@@ -33,7 +32,6 @@ func UnixTimeValue(f zapcore.Field) float64 {
 	if f.Interface != nil {
 		return float64(time.Unix(0, f.Integer).In(f.Interface.(*time.Location)).Unix())
 	}
-	// Fall back to UTC if location is nil.
 	return float64(time.Unix(0, f.Integer).Unix())
 }
 
@@ -42,6 +40,5 @@ func UnixNanoTimeValue(f zapcore.Field) float64 {
 	if f.Interface != nil {
 		return float64(time.Unix(0, f.Integer).In(f.Interface.(*time.Location)).UnixNano())
 	}
-	// Fall back to UTC if location is nil.
 	return float64(time.Unix(0, f.Integer).UnixNano())
 }

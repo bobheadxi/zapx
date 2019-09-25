@@ -1,4 +1,8 @@
-package zmetrics
+package metrics
+
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./stub/histogram.go --fake-name StubHistogram . Histogram
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./stub/counter.go --fake-name StubCounter . Counter
+//go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 -o ./stub/gauge.go --fake-name StubGauge . Gauge
 
 // Histogram describes a metric that takes repeated observations of the same
 // kind of thing, and produces a statistical summary of those observations,

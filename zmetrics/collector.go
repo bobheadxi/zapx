@@ -3,79 +3,74 @@ package zmetrics
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+
+	"go.bobheadxi.dev/zapx/zmetrics/metrics"
 )
 
 // HistogramCollector defines a collector for histograms
 type HistogramCollector struct {
-	Histogram
+	metrics.Histogram
 	Value ValueFunc
+}
+
+// NewHistogram instantiates a new histogram collector
+func NewHistogram(m metrics.Histogram, v ValueFunc) HistogramCollector {
+	return HistogramCollector{m, v}
 }
 
 // CounterCollector defines a collector for counters
 type CounterCollector struct {
-	Counter
+	metrics.Counter
 	Value ValueFunc
+}
+
+// NewCounter instantiates a new counter collector
+func NewCounter(m metrics.Counter, v ValueFunc) CounterCollector {
+	return CounterCollector{m, v}
 }
 
 // GaugeCollector defines a collector for gauges
 type GaugeCollector struct {
-	Gauge
+	metrics.Gauge
 	Value ValueFunc
 }
 
-// Collectors is a container for all your metrics collectors
+// NewGauge instantiates a new gauge collector
+func NewGauge(m metrics.Gauge, v ValueFunc) GaugeCollector {
+	return GaugeCollector{m, v}
+}
+
+// Collectors is a container for all your metrics collectors. It should not be
+// modified after creation.
 type Collectors struct {
 	Histograms map[string]HistogramCollector
 	Counters   map[string]CounterCollector
 	Gauges     map[string]GaugeCollector
 }
 
-// WithCollectors attaches collectors to the logger
-func WithCollectors(l *zap.Logger, collectors Collectors) *zap.Logger {
-	if collectors.Histograms == nil {
-		collectors.Histograms = make(map[string]HistogramCollector)
+// ExactMatch tries to match the given field exactly
+func (c *Collectors) ExactMatch(f zapcore.Field) {
+	if h, ok := c.Histograms[f.Key]; ok {
+		h.Observe(h.Value(f))
 	}
-	if collectors.Counters == nil {
-		collectors.Counters = make(map[string]CounterCollector)
+	if c, ok := c.Counters[f.Key]; ok {
+		c.Add(c.Value(f))
 	}
-	if collectors.Gauges == nil {
-		collectors.Gauges = make(map[string]GaugeCollector)
-	}
-	return zap.New(&collectorCore{l.Core(), collectors})
-}
-
-type collectorCore struct {
-	c          zapcore.Core
-	collectors Collectors
-}
-
-func (c *collectorCore) capture(fields []zapcore.Field) {
-	for _, f := range fields {
-		if h, ok := c.collectors.Histograms[f.Key]; ok {
-			h.Observe(h.Value(f))
-		}
-		if c, ok := c.collectors.Counters[f.Key]; ok {
-			c.Add(c.Value(f))
-		}
-		if v, ok := c.collectors.Gauges[f.Key]; ok {
-			v.Set(v.Value(f))
-		}
+	if v, ok := c.Gauges[f.Key]; ok {
+		v.Set(v.Value(f))
 	}
 }
 
-func (c *collectorCore) With(fields []zapcore.Field) zapcore.Core {
-	c.capture(fields)
-	return c.c.With(fields)
-}
-
-func (c *collectorCore) Write(e zapcore.Entry, fields []zapcore.Field) error {
-	c.capture(fields)
-	return c.c.Write(e, fields)
-}
-
-func (c *collectorCore) Enabled(zapcore.Level) bool { return true }
-func (c *collectorCore) Sync() error                { return c.c.Sync() }
-
-func (c *collectorCore) Check(e zapcore.Entry, checked *zapcore.CheckedEntry) *zapcore.CheckedEntry {
-	return c.c.Check(e, checked)
+// Collect attaches collectors to the logger
+func Collect(l *zap.Logger, c *Collectors) *zap.Logger {
+	if c.Histograms == nil {
+		c.Histograms = make(map[string]HistogramCollector)
+	}
+	if c.Counters == nil {
+		c.Counters = make(map[string]CounterCollector)
+	}
+	if c.Gauges == nil {
+		c.Gauges = make(map[string]GaugeCollector)
+	}
+	return zap.New(wrap(l.Core(), c))
 }
