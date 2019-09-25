@@ -49,6 +49,8 @@ github.com/stretchr/testify v1.4.0 h1:2E4SXV/wtOkTonXsotYi4li6zVWxYlZuYNCXe9XRJy
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 go.bobheadxi.dev/res v0.2.0 h1:L94iZ4ASGjHgfbEhUqOwnXEKDo2Z/8kEIHVeZ5YdbME=
 go.bobheadxi.dev/res v0.2.0/go.mod h1:n1dTJzfVVNxpAmLB0BTgXIR5P9ka6J9DgdMVvz5r6kw=
+go.bobheadxi.dev/zapx/ztest v0.6.4 h1:b3FwXYKMOLqT9/y9vZqQlx8cAlMa3s2b4jTDiBd5Ds4=
+go.bobheadxi.dev/zapx/ztest v0.6.4/go.mod h1:d3NETemhr8TC/4/nPCQolA6cTpg/ntHaQf+Er6uBUeg=
 go.opencensus.io v0.21.0 h1:mU6zScU4U1YAFPHEHYk+3JC4SY7JxgkqS10ZOSyksNg=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
 go.opencensus.io v0.22.0 h1:C9hSCOW830chIVkdja34wa6Ky+IzWllkUinR+BtRZd4=
