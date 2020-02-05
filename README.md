@@ -3,7 +3,7 @@
 Extensions for [`uber-go/zap`](https://github.com/uber-go/zap), a structured
 logging library for [Go](https://golang.org/).
 
-[![GoDoc](https://godoc.org/go.bobheadxi.dev/zapx?status.svg)](https://godoc.org/go.bobheadxi.dev/zapx)
+[![GoDoc](https://img.shields.io/badge/go.pkg.dev-reference-5272B4)](https://pkg.go.dev/go.bobheadxi.dev/zapx)
 [![Build Status](https://dev.azure.com/bobheadxi/bobheadxi/_apis/build/status/bobheadxi.zapx?branchName=master)](https://dev.azure.com/bobheadxi/bobheadxi/_build/latest?definitionId=6&branchName=master)
 [![Benchmark Status](https://github.com/bobheadxi/zapx/workflows/Benchmark/badge.svg)](https://zapx.bobheadxi.dev/benchmarks/)
 [![Go Report Card](https://goreportcard.com/badge/go.bobheadxi.dev/zapx)](https://goreportcard.com/report/go.bobheadxi.dev/zapx)
