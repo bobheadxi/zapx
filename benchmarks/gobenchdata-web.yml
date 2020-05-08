@@ -1,0 +1,5 @@
+title: gobenchdata web
+description: benchmarks for <a href="https://github.com/bobheadxi/zapx">bobheadxi/zapx</a>, a library of extensions for <a href="https://github.com/uber-go/zap">uber-go/zap</a>
+repository: https://github.com/bobheadxi/zapx
+benchmarksFile: benchmarks.json
+chartGroups: []

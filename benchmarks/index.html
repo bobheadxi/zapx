@@ -1,83 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
-    <meta name="theme-color" content="#000000" />
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
     <title>zapx continuous benchmarks</title>
-  </head>
 
+    
+
+    <link rel="stylesheet" type="text/css" href="overrides.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="css/app.7faa094f.css" rel="preload" as="style"><link href="js/app.64187d51.js" rel="preload" as="script"><link href="js/chunk-vendors.75f2e803.js" rel="preload" as="script"><link href="css/app.7faa094f.css" rel="stylesheet"></head>
   <body>
+    <noscript>
+      <strong>We're sorry but zapx continuous benchmarks doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
     
-    <div id="benchmarks-path" hidden>benchmarks.json</div>
-    <div id="source" hidden>github.com/bobheadxi/zapx</div>
-    <div id="canonical-import" hidden>go.bobheadxi.dev/zapx</div>
-    <div id="charts-types" hidden>bytes/op,allocs/op</div>
-  
-    
-    <div class="header">
-      <h1>zapx continuous benchmarks</h1>
-      <h4>
-        generated with
-        <a href="https://bobheadxi.dev/r/gobenchdata" target="_blank">
-          gobenchdata
-        </a>
-      </h4>
-      <p>benchmarks for <a href="https://github.com/bobheadxi/zapx">bobheadxi/zapx</a>, a library of extensions for <a href="https://github.com/uber-go/zap">uber-go/zap</a></p>
-    </div>
-
-    <hr />
-
-    
-    <div class="main">
-      <div id="charts"></div>
-    </div>
-
-    
-    <div class="footer">
-      <a href="https://bobheadxi.dev/r/gobenchdata">
-        <img alt="View Action in the GitHub Marketplace" src="https://img.shields.io/badge/view-github%20action-yellow.svg" />
-      </a>
-    </div>
-
-    
-    <script type="module">
-      import { generateCharts } from './app.js';
-
-      // extract template variables from generated HTML
-      const benchmarks = document.getElementById('benchmarks-path').innerText;
-      const source = document.getElementById('source').innerText;
-      const canonicalImport = document.getElementById('canonical-import').innerText;
-      const chartsTypes = document.getElementById('charts-types').innerText;
-
-      // if the value incldues the default template value, then it is invalid
-      window.onload = generateCharts({
-        div: document.getElementById('charts'),
-        json: benchmarks.includes('.BenchmarksPath')
-          ? 'benchmarks.json'
-          : benchmarks,
-
-        source: source.includes('.Source')
-          ? ''
-          : source,
-        canonicalImport: canonicalImport.includes('.CanonicalImport')
-          ? ''
-          : canonicalImport,
-
-        chartsTypes: chartsTypes.includes('.ChartsTypes')
-          ? ['bytes/op', 'allocs/op']
-          : chartsTypes.split(','),
-      }).finally(console.log('charts loaded!'));
-    </script>
-  </body>
+  <script type="text/javascript" src="js/chunk-vendors.75f2e803.js"></script><script type="text/javascript" src="js/app.64187d51.js"></script></body>
 </html>
