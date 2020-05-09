@@ -1,7 +1,7 @@
 name: Benchmark
 on:
   push:
-    branches: [ master, new-gobenchdata ]
+    branches: [ master ]
 
 jobs:
   benchmark:
